@@ -1,9 +1,14 @@
 package core
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"path/filepath"
+	"runtime"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -14,8 +19,9 @@ type app struct {
 }
 
 func NewApp() app {
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	loadEnviroment()
+
+	db, err := gorm.Open(postgres.Open(getUrlDatabase()), &gorm.Config{})
 
 	if err != nil {
 		log.Println(err)
@@ -113,7 +119,6 @@ func (a app) GroupMethod(group *gin.RouterGroup, method string, endPoint string,
 		group.DELETE(endPoint, func(ctx *gin.Context) {
 			a.ProcessCtx(ctx, handler)
 		})
-	// Adicione outros métodos conforme necessário
 	default:
 		panic("Método HTTP não suportado")
 	}
@@ -121,4 +126,28 @@ func (a app) GroupMethod(group *gin.RouterGroup, method string, endPoint string,
 
 func (a app) Run() {
 	a.router.Run(":3333")
+}
+
+func loadEnviroment() {
+	_, b, _, _ := runtime.Caller(0)
+	var ProjectRootPath = filepath.Join(filepath.Dir(b), "../../../")
+	godotenv.Load(ProjectRootPath + "/.env")
+}
+
+func getUrlDatabase() string {
+	dbPort := os.Getenv("DB_PORT")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbUser := os.Getenv("DB_USER")
+	dbName := os.Getenv("DB_NAME")
+	dbHost := os.Getenv("DB_HOST")
+
+	return fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		dbHost,
+		dbUser,
+		dbPassword,
+		dbName,
+		dbPort,
+	)
+
 }
