@@ -1,7 +1,9 @@
 package handler
 
+import "simushop/internal/entity"
+
 type repository interface {
-	CreateUser()
+	CreateUser(user entity.User)
 }
 
 type handler struct {

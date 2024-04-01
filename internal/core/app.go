@@ -2,36 +2,24 @@ package core
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 type app struct {
 	router *gin.Engine
-	Db     *gorm.DB
 }
 
 func NewApp() app {
-	loadEnviroment()
-
-	db, err := gorm.Open(postgres.Open(getUrlDatabase()), &gorm.Config{})
-
-	if err != nil {
-		log.Println(err)
-	}
-
 	router := gin.Default()
+	loadEnviroment()
 
 	return app{
 		router,
-		db,
 	}
 }
 
@@ -130,7 +118,7 @@ func (a app) Run() {
 
 func loadEnviroment() {
 	_, b, _, _ := runtime.Caller(0)
-	var ProjectRootPath = filepath.Join(filepath.Dir(b), "../../../")
+	var ProjectRootPath = filepath.Join(filepath.Dir(b), "../../")
 	godotenv.Load(ProjectRootPath + "/.env")
 }
 
