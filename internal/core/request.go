@@ -21,6 +21,6 @@ func NewRequest(ctx *gin.Context) Request {
 func (r Request) NewFail(errorCode int, message string) Fail {
 	return Fail{
 		ErrorCode: errorCode,
-		Message:   message,
+		Response:  message,
 	}
 }

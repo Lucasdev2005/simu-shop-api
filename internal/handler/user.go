@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"net/http"
+	"simushop/internal/apirest"
 	"simushop/internal/core"
 	"simushop/internal/entity"
 )
@@ -25,14 +25,9 @@ func (h handler) CreateUser(request core.Request) (core.Success, core.Fail) {
 	})
 
 	if err != nil {
-		return core.Success{}, core.Fail{
-			ErrorCode: http.StatusBadRequest,
-			Message:   err.Error(),
-		}
+		return core.Success{}, apirest.BadRequest(err.Error())
 	}
-	return core.Success{
-		SuccessCode: http.StatusCreated,
-		Data:        user,
-	}, core.Fail{}
+
+	return apirest.Created(user), core.Fail{}
 
 }

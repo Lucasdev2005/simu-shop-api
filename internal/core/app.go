@@ -41,9 +41,9 @@ func (a app) ProcessCtx(ctx *gin.Context, handler func(Request) (Success, Fail))
 	success, fail := handler(request)
 
 	if fail.ErrorCode != 0 {
-		ctx.JSON(fail.ErrorCode, fail.Message)
+		ctx.JSON(fail.ErrorCode, fail.Response)
 	} else {
-		ctx.JSON(success.SuccessCode, success.Data)
+		ctx.JSON(success.SuccessCode, success.Response)
 	}
 }
 
