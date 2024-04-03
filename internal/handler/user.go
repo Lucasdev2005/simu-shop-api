@@ -13,6 +13,7 @@ type CreateUser struct {
 	UserType     string  `json:"user_type"`
 }
 
+// TODO change core.Sucess and Core.Fail to core.Response
 func (h handler) CreateUser(request core.Request) (core.Success, core.Fail) {
 	var user CreateUser
 	request.Body(&user)
