@@ -36,48 +36,6 @@ func (a app) Group(endPoint string, fn func(g *gin.RouterGroup)) {
 	}
 }
 
-func (a app) Post(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.POST(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Get(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.GET(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Delete(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.DELETE(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Head(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.HEAD(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Patch(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.PATCH(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Options(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.OPTIONS(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
-func (a app) Put(endpoint string, handler func(Request) (Success, Fail)) {
-	a.router.PUT(endpoint, func(ctx *gin.Context) {
-		a.ProcessCtx(ctx, handler)
-	})
-}
-
 func (a app) ProcessCtx(ctx *gin.Context, handler func(Request) (Success, Fail)) {
 	request := NewRequest(ctx)
 	success, fail := handler(request)

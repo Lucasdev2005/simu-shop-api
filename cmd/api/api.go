@@ -28,8 +28,11 @@ func main() {
 
 	handler := handler.NewHandler(repository)
 
-	app.Group("user", func(g *gin.RouterGroup) {
-		app.GroupMethod(g, http.MethodPost, "/", handler.CreateUser)
+	app.Group("api", func(g *gin.RouterGroup) {
+		userGroup := g.Group("user")
+		{
+			app.GroupMethod(userGroup, http.MethodPost, "/", handler.CreateUser)
+		}
 	})
 
 	app.Run()
