@@ -1,6 +1,12 @@
 package core
 
-type Fail struct {
-	ErrorCode int
-	Response  interface{}
+import (
+	"net/http"
+)
+
+func BadRequest(data interface{}) Response {
+	return Response{
+		Code: http.StatusBadRequest,
+		Data: data,
+	}
 }

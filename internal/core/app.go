@@ -1,8 +1,6 @@
 package core
 
 import (
-	"fmt"
-	"os"
 	"path/filepath"
 	"runtime"
 
@@ -36,18 +34,14 @@ func (a app) Group(endPoint string, fn func(g *gin.RouterGroup)) {
 	}
 }
 
-func (a app) ProcessCtx(ctx *gin.Context, handler func(Request) (Success, Fail)) {
+func (a app) ProcessCtx(ctx *gin.Context, handler func(Request) Response) {
 	request := NewRequest(ctx)
-	success, fail := handler(request)
+	result := handler(request)
 
-	if fail.ErrorCode != 0 {
-		ctx.JSON(fail.ErrorCode, fail.Response)
-	} else {
-		ctx.JSON(success.SuccessCode, success.Response)
-	}
+	ctx.JSON(result.Code, result.Data)
 }
 
-func (a app) GroupMethod(group *gin.RouterGroup, method string, endPoint string, handler func(Request) (Success, Fail)) {
+func (a app) GroupMethod(group *gin.RouterGroup, method string, endPoint string, handler func(Request) Response) {
 	switch method {
 	case "GET":
 		group.GET(endPoint, func(ctx *gin.Context) {
@@ -78,22 +72,4 @@ func loadEnviroment() {
 	_, b, _, _ := runtime.Caller(0)
 	var ProjectRootPath = filepath.Join(filepath.Dir(b), "../../")
 	godotenv.Load(ProjectRootPath + "/.env")
-}
-
-func getUrlDatabase() string {
-	dbPort := os.Getenv("DB_PORT")
-	dbPassword := os.Getenv("DB_PASSWORD")
-	dbUser := os.Getenv("DB_USER")
-	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
-
-	return fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		dbHost,
-		dbUser,
-		dbPassword,
-		dbName,
-		dbPort,
-	)
-
 }

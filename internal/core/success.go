@@ -1,6 +1,10 @@
 package core
 
-type Success struct {
-	SuccessCode int
-	Response    interface{}
+import "net/http"
+
+func Created(data interface{}) Response {
+	return Response{
+		Code: http.StatusCreated,
+		Data: data,
+	}
 }

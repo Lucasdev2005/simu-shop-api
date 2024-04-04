@@ -17,10 +17,3 @@ func NewRequest(ctx *gin.Context) Request {
 		GetHeader:     ctx.Request.Header.Get,
 	}
 }
-
-func (r Request) NewFail(errorCode int, message string) Fail {
-	return Fail{
-		ErrorCode: errorCode,
-		Response:  message,
-	}
-}

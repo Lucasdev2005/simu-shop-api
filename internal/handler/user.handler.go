@@ -1,21 +1,19 @@
 package handler
 
 import (
-	"simushop/internal/apirest"
 	"simushop/internal/core"
 	"simushop/internal/entity"
 )
 
-type CreateUser struct {
+type CreateUserDTO struct {
 	Username     string  `json:"username"`
 	UserBalance  float64 `json:"user_balance"`
 	UserPassword string  `json:"user_password"`
 	UserType     string  `json:"user_type"`
 }
 
-// TODO change core.Sucess and Core.Fail to core.Response
-func (h handler) CreateUser(request core.Request) (core.Success, core.Fail) {
-	var user CreateUser
+func (h handler) CreateUser(request core.Request) core.Response {
+	var user CreateUserDTO
 	request.Body(&user)
 
 	err := h.repository.CreateUser(entity.User{
@@ -26,9 +24,9 @@ func (h handler) CreateUser(request core.Request) (core.Success, core.Fail) {
 	})
 
 	if err != nil {
-		return core.Success{}, apirest.BadRequest(err.Error())
+		return core.BadRequest(err.Error())
 	}
 
-	return apirest.Created(user), core.Fail{}
+	return core.Created(user)
 
 }
