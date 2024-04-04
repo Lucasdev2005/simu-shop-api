@@ -9,12 +9,7 @@ import (
 func (r repository) CreateUser(createUserDTO dto.CreateUserDTO) error {
 	var (
 		userFinded entity.User
-		user       = entity.User{
-			UserPassword: createUserDTO.UserPassword,
-			Username:     createUserDTO.Username,
-			UserBalance:  createUserDTO.UserBalance,
-			UserType:     createUserDTO.UserType,
-		}
+		user       = createUserDTO.ToUser()
 
 		result error = fmt.Errorf("username " + user.Username + " exists.")
 	)
