@@ -7,7 +7,7 @@ import (
 
 type CreateUserDTO struct {
 	Username     string  `json:"username" validate:"required"`
-	UserBalance  float64 `json:"user_balance" validate:"required"`
+	UserBalance  float64 `json:"user_balance" validate:"required,min=0"`
 	UserPassword string  `json:"user_password" validate:"required"`
 	UserType     string  `json:"user_type" validate:"required,userType"`
 }
