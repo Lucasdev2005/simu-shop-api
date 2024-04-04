@@ -6,27 +6,35 @@ import (
 )
 
 type CreateUserDTO struct {
-	Username     string  `json:"username"`
-	UserBalance  float64 `json:"user_balance"`
-	UserPassword string  `json:"user_password"`
-	UserType     string  `json:"user_type"`
+	Username     string  `json:"username" validate:"required"`
+	UserBalance  float64 `json:"user_balance" validate:"required"`
+	UserPassword string  `json:"user_password" validate:"required"`
+	UserType     string  `json:"user_type" validate:"required,userType"`
+}
+
+func (c CreateUserDTO) ToEntity() entity.User {
+	return entity.User{
+		UserPassword: c.UserPassword,
+		Username:     c.Username,
+		UserBalance:  c.UserBalance,
+		UserType:     c.UserType,
+	}
 }
 
 func (h handler) CreateUser(request core.Request) core.Response {
 	var user CreateUserDTO
 	request.Body(&user)
+	errFromDTO := h.ValidateStruct(user)
 
-	err := h.repository.CreateUser(entity.User{
-		UserPassword: user.UserPassword,
-		Username:     user.Username,
-		UserBalance:  user.UserBalance,
-		UserType:     user.UserType,
-	})
+	if errFromDTO != nil {
+		return core.BadRequest(errFromDTO.Error())
+	}
+
+	err := h.repository.CreateUser(user.ToEntity())
 
 	if err != nil {
 		return core.BadRequest(err.Error())
 	}
 
 	return core.Created(user)
-
 }
