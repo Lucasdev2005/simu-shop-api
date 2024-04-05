@@ -14,7 +14,7 @@ func (h handler) CreateUser(request core.Request) core.Response {
 		return core.BadRequest(errFromDTO.Error())
 	}
 
-	err := h.repository.CreateUser(user)
+	err := h.repository.CreateUser(user.ToUser())
 
 	if err != nil {
 		return core.BadRequest(err.Error())

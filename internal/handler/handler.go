@@ -1,14 +1,14 @@
 package handler
 
 import (
-	"simushop/internal/dto"
+	"simushop/internal/entity"
 	"simushop/internal/handler/validators"
 
 	"github.com/go-playground/validator/v10"
 )
 
 type repository interface {
-	CreateUser(user dto.CreateUserDTO) error
+	CreateUser(user entity.User) error
 }
 
 type handler struct {

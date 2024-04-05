@@ -2,14 +2,12 @@ package repository
 
 import (
 	"fmt"
-	"simushop/internal/dto"
 	"simushop/internal/entity"
 )
 
-func (r repository) CreateUser(createUserDTO dto.CreateUserDTO) error {
+func (r repository) CreateUser(user entity.User) error {
 	var (
 		userFinded entity.User
-		user       = createUserDTO.ToUser()
 
 		result error = fmt.Errorf("username " + user.Username + " exists.")
 	)
@@ -17,7 +15,7 @@ func (r repository) CreateUser(createUserDTO dto.CreateUserDTO) error {
 	r.db.Where("username = $1", user.Username).First(&userFinded)
 
 	if !userFinded.Exist() {
-		result = r.db.Save(&user).Scan(&user).Error
+		result = r.db.Create(&user).Scan(&user).Error
 	}
 
 	return result

@@ -32,3 +32,6 @@ jobs:
 
     - name: Test Handlers
       run: go test ./internal/handler
+
+    - name: Test Repositories
+      run: go test ./internal/repository

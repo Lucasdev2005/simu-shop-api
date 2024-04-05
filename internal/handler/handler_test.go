@@ -3,7 +3,7 @@ package handler_test
 import (
 	"net/http"
 	"simushop/internal/core"
-	"simushop/internal/dto"
+	"simushop/internal/entity"
 	"simushop/internal/handler"
 	"strconv"
 	"testing"
@@ -11,7 +11,7 @@ import (
 
 type mockRepositoryImpl struct{}
 
-func (m *mockRepositoryImpl) CreateUser(user dto.CreateUserDTO) error {
+func (m *mockRepositoryImpl) CreateUser(user entity.User) error {
 	return nil
 }
 
