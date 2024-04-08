@@ -11,8 +11,8 @@ import (
 
 type mockRepositoryImpl struct{}
 
-func (m *mockRepositoryImpl) CreateUser(user entity.User) error {
-	return nil
+func (m *mockRepositoryImpl) CreateUser(user entity.User) (entity.User, error) {
+	return entity.User{}, nil
 }
 
 var (

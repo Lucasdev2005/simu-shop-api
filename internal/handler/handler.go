@@ -8,7 +8,7 @@ import (
 )
 
 type repository interface {
-	CreateUser(user entity.User) error
+	CreateUser(user entity.User) (entity.User, error)
 }
 
 type handler struct {
