@@ -14,6 +14,24 @@ var user entity.User = entity.User{
 }
 
 func TestCreateUser(t *testing.T) {
-	err := mockRepository.CreateUser(user)
-	t.Error(err)
+	t.Log("testing creating a user.")
+	err := createUser()
+
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestCreatingUsernameWithExistingUsername(t *testing.T) {
+	t.Log("testing creating user with username existing on database.")
+	createUser()
+	err := createUser()
+
+	if err == nil {
+		t.Error("saving user with a existing username.")
+	}
+}
+
+func createUser() error {
+	return mockRepository.CreateUser(user)
 }

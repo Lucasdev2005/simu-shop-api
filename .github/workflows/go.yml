@@ -30,8 +30,5 @@ jobs:
       with:
         go-version: '1.21'
 
-    - name: Test Handlers
-      run: go test ./internal/handler
-
-    - name: Test Repositories
-      run: go test ./internal/repository
+    - name: Testing
+      run: sh test/unit-test.sh
