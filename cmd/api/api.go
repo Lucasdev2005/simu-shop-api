@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"simushop/internal/core"
@@ -10,17 +11,21 @@ import (
 	"simushop/internal/repository"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/driver/postgres"
 )
 
 func main() {
 	app := core.NewApp()
 
 	database := database.NewDatabase(
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_HOST"),
+		postgres.Open(fmt.Sprintf(
+			"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+			os.Getenv("DB_PORT"),
+			os.Getenv("DB_PASSWORD"),
+			os.Getenv("DB_USER"),
+			os.Getenv("DB_NAME"),
+			os.Getenv("DB_HOST"),
+		)),
 		entity.User{},
 	)
 

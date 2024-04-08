@@ -1,37 +1,16 @@
 package repository_test
 
 import (
-	"log"
+	"simushop/internal/database"
+	"simushop/internal/entity"
 	"simushop/internal/repository"
-	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"gorm.io/driver/sqlite"
 )
 
-func NewMockDB() (*gorm.DB, sqlmock.Sqlmock) {
-	db, mock, err := sqlmock.New()
-	if err != nil {
-		log.Fatalf("An error '%s' was not expected when opening a stub database connection", err)
-	}
+var db = database.NewDatabase(
+	sqlite.Open("gorm.db"),
+	entity.User{},
+)
 
-	gormDB, err := gorm.Open(postgres.New(postgres.Config{
-		Conn: db,
-	}), &gorm.Config{})
-
-	if err != nil {
-		log.Fatalf("An error '%s' was not expected when opening gorm database", err)
-	}
-
-	return gormDB, mock
-}
-
-var dbMock, sqlMock = NewMockDB()
-var mockRepository = repository.NewRepository(dbMock)
-
-func success(t *testing.T) {
-	if err := sqlMock.ExpectationsWereMet(); err != nil {
-		t.Fatalf("Unfulfilled expectations: %s", err)
-	}
-}
+var mockRepository = repository.NewRepository(db.Db)
