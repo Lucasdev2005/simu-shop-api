@@ -9,6 +9,7 @@ import (
 
 type repository interface {
 	CreateUser(user entity.User) (entity.User, error)
+	UpdateUser(user entity.User, where string, args ...interface{}) error
 }
 
 type handler struct {
@@ -19,6 +20,7 @@ type handler struct {
 func NewHandler(repository repository) handler {
 	validate := validator.New(validator.WithRequiredStructEnabled())
 	validate.RegisterValidation(validators.ValidUserType())
+	validate.RegisterValidation(validators.UptateValidUserType())
 	return handler{
 		repository,
 		validate,

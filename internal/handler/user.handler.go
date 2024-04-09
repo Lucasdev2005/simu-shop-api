@@ -8,6 +8,7 @@ import (
 func (h handler) CreateUser(request core.Request) core.Response {
 	var user dto.CreateUserDTO
 	request.Body(&user)
+
 	errFromDTO := h.ValidateStruct(user)
 
 	if errFromDTO != nil {
@@ -21,4 +22,23 @@ func (h handler) CreateUser(request core.Request) core.Response {
 	}
 
 	return core.Created(userCreated)
+}
+
+func (h handler) UpdateUser(request core.Request) core.Response {
+	var user dto.UpdateUserDTO
+	request.Body(&user)
+
+	errFromDTO := h.ValidateStruct(user)
+
+	if errFromDTO != nil {
+		return core.BadRequest(errFromDTO.Error())
+	}
+
+	err := h.repository.UpdateUser(user.ToUser(), "user_id = ?", request.GetParam("id"))
+
+	if err != nil {
+		return core.BadRequest(err.Error())
+	}
+
+	return core.Ok("user updated")
 }

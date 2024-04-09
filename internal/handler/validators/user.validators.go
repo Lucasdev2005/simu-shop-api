@@ -16,3 +16,15 @@ func ValidUserType() (string, validator.Func) {
 		return types[fl.Field().String()]
 	}
 }
+
+func UptateValidUserType() (string, validator.Func) {
+	return "updateUserType", func(fl validator.FieldLevel) bool {
+		var types = map[string]bool{
+			enum.UserTypeEnum.BUYER:  true,
+			enum.UserTypeEnum.SELLER: true,
+			"":                       true,
+		}
+
+		return types[fl.Field().String()]
+	}
+}

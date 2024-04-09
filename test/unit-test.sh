@@ -8,5 +8,6 @@ go test ./internal/handler
 echo "--------------------------------------------------------------------------------------"
 echo "Running unit tests from repository"
 echo "--------------------------------------------------------------------------------------"
+
 rm internal/repository/gorm.db
 go test ./internal/repository

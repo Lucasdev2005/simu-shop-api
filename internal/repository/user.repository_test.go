@@ -45,11 +45,12 @@ func TestUpdatingUser(t *testing.T) {
 		UserBalance:  300,
 		UserType:     enum.UserTypeEnum.BUYER,
 	})
+
 	equal(t, nil, err, "error on saving user.")
 
-	t.Error("[TestUpdatingUser] userCreated.UserId", userCreated.UserId)
 	errOnUpdate := mockRepository.UpdateUser(entity.User{
-		Username: "novo lucas moreira nunes",
+		Username:    "novo lucas moreira nunes",
+		UserBalance: 122,
 	}, "user_id = ?", userCreated.UserId)
 
 	equal(t, nil, errOnUpdate, "error on updating user: "+strconv.Itoa(userCreated.UserId))
