@@ -49,7 +49,6 @@ func TestNegativeBalanceFromCreateUer(t *testing.T) {
 func TestUpdateUser(t *testing.T) {
 	t.Log("testing update user.")
 
-	t.Log("[TestUpdateUser] response: ")
 	response := handlerInstance.UpdateUser(core.Request{
 		GetParam: func(key string) string {
 			return "1"
