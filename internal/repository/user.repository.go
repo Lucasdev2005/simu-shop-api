@@ -15,6 +15,7 @@ func (r repository) CreateUser(user entity.User) (entity.User, error) {
 	r.queryFirst(&userFound, "username = $1", user.Username)
 
 	if !userFound.Exist() {
+		user.SetPassword()
 		result = r.db.Create(&user).Error
 	}
 
@@ -23,6 +24,10 @@ func (r repository) CreateUser(user entity.User) (entity.User, error) {
 
 func (r repository) UpdateUser(user entity.User, where string, args ...interface{}) error {
 	var result error = nil
+
+	if len(user.UserPassword) > 0 {
+		user.SetPassword()
+	}
 
 	tx := r.update(&user, where, args...)
 
