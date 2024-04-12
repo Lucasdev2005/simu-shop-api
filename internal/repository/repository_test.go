@@ -12,6 +12,7 @@ import (
 var db = database.NewDatabase(
 	sqlite.Open("gorm.db"),
 	entity.User{},
+	entity.Product{},
 )
 
 var mockRepository = repository.NewRepository(db.Db)
