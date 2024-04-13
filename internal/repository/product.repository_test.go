@@ -31,7 +31,7 @@ func createProduct() error {
 		ProductValue:            123,
 		ProductDiscountPercent:  2,
 		ProductDescription:      "Descrição de teste",
-		ProductKgWeitght:        123,
+		ProductKgWeight:         123,
 		ProductCentimeterWidth:  123,
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 35,

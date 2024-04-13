@@ -36,6 +36,30 @@ func (m *mockRepositoryImpl) UpdateUser(user entity.User, where string, args ...
 	return nil
 }
 
+func (m *mockRepositoryImpl) CreateProduct(product entity.Product) error {
+	products := map[string]entity.Product{}
+
+	for _, element := range []string{"Lucas Moreira", "produto de teste", "produto de teste 2"} {
+		products[element] = entity.Product{
+			ProductId:               3,
+			ProductName:             element,
+			ProductValue:            123,
+			ProductDiscountPercent:  1,
+			ProductDescription:      "descrição de teste",
+			ProductKgWeight:         23,
+			ProductCentimeterWidth:  120,
+			ProductCentimeterHeight: 11,
+			ProductCentimeterLength: 11,
+		}
+	}
+
+	if products[product.ProductName].Exist() {
+		return fmt.Errorf("Product " + product.ProductName + "Exists.")
+	}
+
+	return nil
+}
+
 var (
 	mockRepository  = &mockRepositoryImpl{}
 	handlerInstance = handler.NewHandler(mockRepository)

@@ -10,6 +10,8 @@ import (
 type repository interface {
 	CreateUser(user entity.User) (entity.User, error)
 	UpdateUser(user entity.User, where string, args ...interface{}) error
+
+	CreateProduct(p entity.Product) error
 }
 
 type handler struct {
