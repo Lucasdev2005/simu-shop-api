@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"simushop/internal/entity"
 )
 
@@ -9,7 +8,7 @@ func (r repository) CreateUser(user entity.User) (entity.User, error) {
 	var (
 		userFound entity.User
 
-		result error = fmt.Errorf("username " + user.Username + " exists.")
+		result error = newError("username " + user.Username + " exists.")
 	)
 
 	r.queryFirst(&userFound, "username = $1", user.Username)

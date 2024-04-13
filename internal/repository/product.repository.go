@@ -1,7 +1,20 @@
 package repository
 
-import "simushop/internal/entity"
+import (
+	"simushop/internal/entity"
+)
 
 func (r repository) CreateProduct(product entity.Product) error {
-	return r.db.Create(&product).Error
+	var (
+		productFound entity.Product
+		result       error = newError("product with name '" + product.ProductName + "' exists.")
+	)
+
+	r.queryFirst(&productFound, "product_name = ?", product.ProductName)
+
+	if !productFound.Exist() {
+		result = r.db.Create(&product).Error
+	}
+
+	return result
 }

@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"reflect"
 
 	"gorm.io/gorm"
@@ -77,4 +78,8 @@ func splitTag(tag, delimiter string) []string {
 	}
 	parts = append(parts, tag[start:])
 	return parts
+}
+
+func newError(text string) error {
+	return fmt.Errorf(text)
 }
