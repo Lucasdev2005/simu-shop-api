@@ -31,6 +31,26 @@ func TestCreateProduct(t *testing.T) {
 	Ok(res, t)
 }
 
+func TestUpdateProduct(t *testing.T) {
+	t.Log("testing update product.")
+
+	res := updateProduct(dto.UpdateProductDTO{
+		ProductName: "Lucas Moreira exclusive",
+	})
+
+	Ok(res, t)
+}
+
+func TestMinValuesFromUpdate(t *testing.T) {
+	t.Log("testing min values from update Product.")
+
+	res := updateProduct(dto.UpdateProductDTO{
+		ProductDescription: "aa",
+	})
+
+	BadRequest(res, t)
+}
+
 func createProduct(productDTO dto.CreateProductDTO) core.Response {
 	return handlerInstance.CreateProduct(core.Request{
 		Body: func(obj any) error {
@@ -49,5 +69,27 @@ func createProduct(productDTO dto.CreateProductDTO) core.Response {
 			return nil
 		},
 	})
+}
 
+func updateProduct(data dto.UpdateProductDTO) core.Response {
+	return handlerInstance.UpdateProduct(core.Request{
+		Body: func(obj any) error {
+			updateProductDTO, ok := obj.(*dto.UpdateProductDTO)
+
+			if ok {
+				updateProductDTO.ProductName = data.ProductName
+				updateProductDTO.ProductCentimeterHeight = data.ProductCentimeterHeight
+				updateProductDTO.ProductCentimeterLength = data.ProductCentimeterLength
+				updateProductDTO.ProductCentimeterWidth = data.ProductCentimeterLength
+				updateProductDTO.ProductDescription = data.ProductDescription
+				updateProductDTO.ProductValue = data.ProductValue
+				updateProductDTO.ProductKgWeitght = data.ProductKgWeitght
+			}
+
+			return nil
+		},
+		GetParam: func(key string) string {
+			return "1"
+		},
+	})
 }

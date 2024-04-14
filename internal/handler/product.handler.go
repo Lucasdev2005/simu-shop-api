@@ -24,3 +24,24 @@ func (h handler) CreateProduct(request core.Request) core.Response {
 
 	return result
 }
+
+func (h handler) UpdateProduct(request core.Request) core.Response {
+	var (
+		body   dto.UpdateProductDTO
+		result core.Response = core.Ok("Product Updated.")
+	)
+	request.Body(&body)
+
+	errOnDTO := h.ValidateStruct(body)
+
+	if errOnDTO != nil {
+		result = core.BadRequest(errOnDTO.Error())
+	} else {
+		errOnUpdate := h.repository.UpdateProduct(body.ToProduct(), "product_id = ?", request.GetParam("id"))
+		if errOnUpdate != nil {
+			result = core.BadRequest(errOnUpdate)
+		}
+	}
+
+	return result
+}

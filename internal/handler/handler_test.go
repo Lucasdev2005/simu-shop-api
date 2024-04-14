@@ -37,6 +37,24 @@ func (m *mockRepositoryImpl) UpdateUser(user entity.User, where string, args ...
 }
 
 func (m *mockRepositoryImpl) CreateProduct(product entity.Product) error {
+
+	if productTable()[product.ProductName].Exist() {
+		return fmt.Errorf("Product " + product.ProductName + "Exists.")
+	}
+
+	return nil
+}
+
+func (m *mockRepositoryImpl) UpdateProduct(product entity.Product, where string, args ...interface{}) error {
+
+	if len(product.ProductName) > 0 && productTable()[product.ProductName].Exist() {
+		return fmt.Errorf("Product " + product.ProductName + " Exists.")
+	}
+
+	return nil
+}
+
+func productTable() map[string]entity.Product {
 	products := map[string]entity.Product{}
 
 	for _, element := range []string{"Lucas Moreira", "produto de teste", "produto de teste 2"} {
@@ -53,11 +71,7 @@ func (m *mockRepositoryImpl) CreateProduct(product entity.Product) error {
 		}
 	}
 
-	if products[product.ProductName].Exist() {
-		return fmt.Errorf("Product " + product.ProductName + "Exists.")
-	}
-
-	return nil
+	return products
 }
 
 var (

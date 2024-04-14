@@ -27,6 +27,7 @@ func main() {
 			os.Getenv("DB_PORT"),
 		)),
 		entity.User{},
+		entity.Product{},
 	)
 
 	repository := repository.NewRepository(database.Db)
@@ -38,6 +39,12 @@ func main() {
 		{
 			app.GroupMethod(userGroup, http.MethodPost, "/", handler.CreateUser)
 			app.GroupMethod(userGroup, http.MethodPut, "/:id", handler.UpdateUser)
+		}
+
+		productGroup := g.Group("product")
+		{
+			app.GroupMethod(productGroup, http.MethodPost, "/", handler.CreateProduct)
+			app.GroupMethod(productGroup, http.MethodPut, "/:id", handler.UpdateProduct)
 		}
 	})
 

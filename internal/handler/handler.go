@@ -12,6 +12,7 @@ type repository interface {
 	UpdateUser(user entity.User, where string, args ...interface{}) error
 
 	CreateProduct(p entity.Product) error
+	UpdateProduct(p entity.Product, where string, args ...interface{}) error
 }
 
 type handler struct {
