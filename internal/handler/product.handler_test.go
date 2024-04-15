@@ -26,6 +26,7 @@ func TestCreateProduct(t *testing.T) {
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 123,
 		ProductDiscountPercent:  1,
+		ProductSellerId:         1,
 	})
 
 	Ok(res, t)
@@ -64,6 +65,7 @@ func createProduct(productDTO dto.CreateProductDTO) core.Response {
 				createProductDTO.ProductDescription = productDTO.ProductDescription
 				createProductDTO.ProductValue = productDTO.ProductValue
 				createProductDTO.ProductKgWeitght = productDTO.ProductKgWeitght
+				createProductDTO.ProductSellerId = productDTO.ProductSellerId
 			}
 
 			return nil
@@ -84,6 +86,7 @@ func updateProduct(data dto.UpdateProductDTO) core.Response {
 				updateProductDTO.ProductDescription = data.ProductDescription
 				updateProductDTO.ProductValue = data.ProductValue
 				updateProductDTO.ProductKgWeitght = data.ProductKgWeitght
+				updateProductDTO.ProductSellerId = data.ProductSellerId
 			}
 
 			return nil

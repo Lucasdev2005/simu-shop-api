@@ -17,6 +17,7 @@ func TestCreatingProduct(t *testing.T) {
 		ProductCentimeterWidth:  123,
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 35,
+		ProductSellerId:         1,
 	})
 
 	equal(t, nil, err, "Error on saving user on Database.")
@@ -34,6 +35,7 @@ func TestTryCreatingProductsWithSameName(t *testing.T) {
 		ProductCentimeterWidth:  123,
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 35,
+		ProductSellerId:         1,
 	}
 
 	/* creating product*/
@@ -57,6 +59,7 @@ func TestUpdateProduct(t *testing.T) {
 		ProductCentimeterWidth:  123,
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 35,
+		ProductSellerId:         1,
 	}
 	productNameToUpdate := product.ProductName + "novo"
 
