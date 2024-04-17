@@ -13,6 +13,10 @@ type repository interface {
 
 	CreateProduct(p entity.Product) error
 	UpdateProduct(p entity.Product, where string, args ...interface{}) error
+
+	CreateTopic(topic entity.Topic) error
+	UpdateTopic(topic entity.Topic, where string, args ...interface{}) error
+	ListTopics(where string, args ...interface{}) []entity.Topic
 }
 
 type handler struct {

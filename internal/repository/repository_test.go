@@ -12,6 +12,7 @@ import (
 var db = database.NewDatabase(
 	sqlite.Open("gorm.db"),
 	entity.User{},
+	entity.Topic{},
 	entity.Product{},
 )
 
@@ -21,6 +22,7 @@ var mockRepository = repository.NewRepository(db.Db)
 func equal(t *testing.T, expected interface{}, actual interface{}, msg string) {
 	if expected != actual {
 		t.Error(msg)
+		t.Error(actual)
 	}
 }
 

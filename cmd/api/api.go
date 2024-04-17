@@ -27,6 +27,7 @@ func main() {
 			os.Getenv("DB_PORT"),
 		)),
 		entity.User{},
+		entity.Topic{},
 		entity.Product{},
 	)
 
