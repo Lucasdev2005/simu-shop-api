@@ -2,6 +2,7 @@ package handler_test
 
 import (
 	"fmt"
+	"log"
 	"simushop/internal/entity"
 	"strconv"
 )
@@ -51,20 +52,31 @@ func (m mockRepositoryImpl) UpdateProduct(product entity.Product, where string, 
 }
 
 func (m mockRepositoryImpl) CreateTopic(topic entity.Topic) error {
-	var (
-		table        = topicTable()
-		result error = nil
-	)
+	return checkExistingTopicName(topic.TopicName)
+}
 
-	if _, ok := table[topic.TopicName]; ok {
-		result = fmt.Errorf("topic exists")
+func (m mockRepositoryImpl) UpdateTopic(topic entity.Topic, where string, args ...interface{}) error {
+	var result error = nil
+
+	log.Println("[UpdateTopic] result: ", result)
+	if len(topic.TopicName) > 0 {
+		result = checkExistingTopicName(topic.TopicName)
 	}
 
 	return result
 }
 
-func (m mockRepositoryImpl) UpdateTopic(topic entity.Topic, where string, args ...interface{}) error {
-	return nil
+func checkExistingTopicName(topicName string) error {
+	var (
+		table        = topicTable()
+		result error = nil
+	)
+
+	if _, ok := table[topicName]; ok {
+		result = fmt.Errorf("topic exists")
+	}
+
+	return result
 }
 
 func (m mockRepositoryImpl) ListTopics(where string, args ...interface{}) []entity.Topic {

@@ -1,6 +1,7 @@
 package handler_test
 
 import (
+	"log"
 	"simushop/internal/core"
 	"simushop/internal/dto"
 	"testing"
@@ -43,6 +44,44 @@ func createTopic(data dto.CreateTopicDTO) core.Response {
 				createTopicDTO.TopicName = data.TopicName
 			}
 			return nil
+		},
+	})
+}
+
+func TestUpdateTopic(t *testing.T) {
+	t.Log("updating Topics")
+
+	res := updateTopic(dto.UpdateTopicDTO{
+		TopicName: "topic to Update",
+	})
+
+	Ok(res, t)
+}
+
+func TestUpdateTopicWithExistingName(t *testing.T) {
+	t.Log("testing update topic with existing name")
+
+	res := updateTopic(dto.UpdateTopicDTO{
+		TopicName: "topic 1",
+	})
+
+	BadRequest(res, t)
+}
+
+func updateTopic(dtoToUpdate dto.UpdateTopicDTO) core.Response {
+	log.Println("[UpdateTopic]")
+
+	return handlerInstance.UpdateTopic(core.Request{
+		Body: func(obj any) error {
+			updateTopicDTO, ok := obj.(*dto.UpdateTopicDTO)
+
+			if ok {
+				updateTopicDTO.TopicName = dtoToUpdate.TopicName
+			}
+			return nil
+		},
+		GetParam: func(key string) string {
+			return "1"
 		},
 	})
 }
