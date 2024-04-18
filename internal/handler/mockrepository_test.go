@@ -51,7 +51,16 @@ func (m mockRepositoryImpl) UpdateProduct(product entity.Product, where string, 
 }
 
 func (m mockRepositoryImpl) CreateTopic(topic entity.Topic) error {
-	return nil
+	var (
+		table        = topicTable()
+		result error = nil
+	)
+
+	if _, ok := table[topic.TopicName]; ok {
+		result = fmt.Errorf("topic exists")
+	}
+
+	return result
 }
 
 func (m mockRepositoryImpl) UpdateTopic(topic entity.Topic, where string, args ...interface{}) error {
@@ -59,13 +68,46 @@ func (m mockRepositoryImpl) UpdateTopic(topic entity.Topic, where string, args .
 }
 
 func (m mockRepositoryImpl) ListTopics(where string, args ...interface{}) []entity.Topic {
+
+	table := topicTable()
+
 	var topics []entity.Topic
 
+	for _, topic := range table {
+		topics = append(topics, topic)
+	}
+
+	return topics
+}
+
+func productTable() map[string]entity.Product {
+	products := map[string]entity.Product{}
+
+	for _, element := range []string{"Lucas Moreira", "produto de teste", "produto de teste 2"} {
+		products[element] = entity.Product{
+			ProductId:               3,
+			ProductName:             element,
+			ProductValue:            123,
+			ProductDiscountPercent:  1,
+			ProductDescription:      "descrição de teste",
+			ProductKgWeight:         23,
+			ProductCentimeterWidth:  120,
+			ProductCentimeterHeight: 11,
+			ProductCentimeterLength: 11,
+		}
+	}
+
+	return products
+}
+
+func topicTable() map[string]entity.Topic {
+	var topics = map[string]entity.Topic{}
+
 	for _, i := range []int{1, 2, 3, 4, 5} {
-		topics = append(topics, entity.Topic{
+		topics["topic "+strconv.Itoa(i)] = entity.Topic{
 			TopicId:   i,
 			TopicName: "topic " + strconv.Itoa(i),
-		})
+		}
 	}
 
 	return topics

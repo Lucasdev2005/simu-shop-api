@@ -14,6 +14,26 @@ func TestRequiredFieldsCreateTopic(t *testing.T) {
 	BadRequest(res, t)
 }
 
+func TestCreateTopicWithExistingName(t *testing.T) {
+	t.Log("testing create Topic")
+
+	res := createTopic(dto.CreateTopicDTO{
+		TopicName: "topic 1",
+	})
+
+	BadRequest(res, t)
+}
+
+func TestCreateTopic(t *testing.T) {
+	t.Log("testing creating topic.")
+
+	res := createTopic(dto.CreateTopicDTO{
+		TopicName: "topic to Create",
+	})
+
+	Created(res, t)
+}
+
 func createTopic(data dto.CreateTopicDTO) core.Response {
 	return handlerInstance.CreateTopic(core.Request{
 		Body: func(obj any) error {
