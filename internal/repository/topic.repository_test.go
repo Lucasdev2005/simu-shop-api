@@ -1,6 +1,7 @@
 package repository_test
 
 import (
+	"simushop/internal/core"
 	"simushop/internal/entity"
 	"strconv"
 	"testing"
@@ -50,8 +51,17 @@ func TestListTopics(t *testing.T) {
 		})
 	}
 
-	topics := mockRepository.ListTopics("topic_name LIKE ? ", "%"+"topic"+"%")
+	topics := mockRepository.ListTopics(core.NewPaginate(core.Request{
+		GetQueryParam: func(key string) string {
+			if key == "page" {
+				return "1"
+			} else {
+				return "2"
+			}
+		},
+	}), "topic_name LIKE ? ", "%"+"topic"+"%")
 
+	t.Error("[]", topics)
 	equal(t, true, len(topics) > 0, "error on List Topics.")
 }
 

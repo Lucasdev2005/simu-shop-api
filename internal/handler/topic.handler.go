@@ -56,12 +56,13 @@ func (h handler) ListTopics(request core.Request) core.Response {
 		result    = core.InternalError("error on list topics.")
 		topicName = request.GetQueryParam("topic_name")
 		query     = h.repository.ListTopics
+		paginate  = core.NewPaginate(request)
 	)
 
 	if len(topicName) > 0 {
-		topics = query("topic_name = ?", topicName)
+		topics = query(paginate, "topic_name LIKE ?", "%"+topicName+"%")
 	} else {
-		topics = query("")
+		topics = query(paginate, "")
 	}
 
 	result = core.Ok(topics)

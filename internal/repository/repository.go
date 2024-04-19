@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"reflect"
+	"simushop/internal/core"
 
 	"gorm.io/gorm"
 )
@@ -13,6 +14,10 @@ type repository struct {
 
 func NewRepository(db *gorm.DB) repository {
 	return repository{db}
+}
+
+func (r repository) paginate(paginate core.Paginate, dest interface{}) *gorm.DB {
+	return r.db.Offset(paginate.GetOffset()).Find(dest)
 }
 
 func (r repository) queryWhere(where string, args ...interface{}) *gorm.DB {

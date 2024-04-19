@@ -51,6 +51,8 @@ func main() {
 		topicGroup := g.Group("topic")
 		{
 			app.GroupMethod(topicGroup, http.MethodPost, "/", handler.CreateTopic)
+			app.GroupMethod(topicGroup, http.MethodPut, "/:id", handler.UpdateTopic)
+			app.GroupMethod(topicGroup, http.MethodGet, "/", handler.ListTopics)
 		}
 	})
 

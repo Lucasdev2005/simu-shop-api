@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"simushop/internal/core"
 	"simushop/internal/entity"
 	"simushop/internal/handler/validators"
 
@@ -16,7 +17,7 @@ type repository interface {
 
 	CreateTopic(topic entity.Topic) error
 	UpdateTopic(topic entity.Topic, where string, args ...interface{}) error
-	ListTopics(where string, args ...interface{}) []entity.Topic
+	ListTopics(p core.Paginate, where string, args ...interface{}) []entity.Topic
 }
 
 type handler struct {
