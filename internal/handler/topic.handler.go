@@ -3,6 +3,7 @@ package handler
 import (
 	"simushop/internal/core"
 	"simushop/internal/dto"
+	"simushop/internal/entity"
 )
 
 func (h handler) CreateTopic(request core.Request) core.Response {
@@ -45,6 +46,25 @@ func (h handler) UpdateTopic(request core.Request) core.Response {
 	if err != nil {
 		result = core.BadRequest(err.Error())
 	}
+
+	return result
+}
+
+func (h handler) ListTopics(request core.Request) core.Response {
+	var (
+		topics    []entity.Topic
+		result    = core.InternalError("error on list topics.")
+		topicName = request.GetQueryParam("topic_name")
+		query     = h.repository.ListTopics
+	)
+
+	if len(topicName) > 0 {
+		topics = query("topic_name = ?", topicName)
+	} else {
+		topics = query("")
+	}
+
+	result = core.Ok(topics)
 
 	return result
 }

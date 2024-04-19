@@ -15,3 +15,10 @@ func Ok(data interface{}) Response {
 		Data: data,
 	}
 }
+
+func InternalError(data interface{}) Response {
+	return Response{
+		Code: http.StatusInternalServerError,
+		Data: data,
+	}
+}

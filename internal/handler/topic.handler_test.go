@@ -85,3 +85,15 @@ func updateTopic(dtoToUpdate dto.UpdateTopicDTO) core.Response {
 		},
 	})
 }
+
+func TestListingTopics(t *testing.T) {
+	t.Log("testing list topics.")
+
+	res := handlerInstance.ListTopics(core.Request{
+		GetQueryParam: func(key string) string {
+			return "test"
+		},
+	})
+
+	Ok(res, t)
+}
