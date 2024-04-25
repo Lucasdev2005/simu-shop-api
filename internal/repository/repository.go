@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 	"simushop/internal/core"
 
@@ -29,6 +30,7 @@ func (r repository) queryFirst(dest interface{}, where string, args ...interface
 }
 
 func (r repository) update(pointer any, where string, args ...interface{}) *gorm.DB {
+	log.Println("[update] mapFields: ", r.mapFields(pointer))
 	return r.db.Model(pointer).Select("*").Where(where, args...).Updates(r.mapFields(pointer))
 }
 

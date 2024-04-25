@@ -3,6 +3,7 @@ package handler
 import (
 	"simushop/internal/core"
 	"simushop/internal/dto"
+	"strconv"
 )
 
 func (h handler) CreateProduct(request core.Request) core.Response {
@@ -34,10 +35,12 @@ func (h handler) UpdateProduct(request core.Request) core.Response {
 
 	errOnDTO := h.ValidateStruct(body)
 
+	parsedId, _ := strconv.Atoi(request.GetParam("id"))
+
 	if errOnDTO != nil {
 		result = core.BadRequest(errOnDTO.Error())
 	} else {
-		errOnUpdate := h.repository.UpdateProduct(body.ToProduct(), "product_id = ?", request.GetParam("id"))
+		errOnUpdate := h.repository.UpdateProduct(body.ToProduct(parsedId), "product_id = ?", request.GetParam("id"))
 		if errOnUpdate != nil {
 			result = core.BadRequest(errOnUpdate)
 		}

@@ -24,6 +24,7 @@ type UpdateProductDTO struct {
 	ProductCentimeterHeight float64 `json:"productCentimeterHeight" validate:"omitempty,min=1"`
 	ProductCentimeterLength float64 `json:"productCentimeterLength" validate:"omitempty,min=1"`
 	ProductSellerId         int     `json:"productSellerId" validate:"omitempty,min=1"`
+	TopicsIds               []int   `json:"topicIds" validate:"omitempty,min=1"`
 	ProductDiscountPercent  float64 `json:"productDiscountPercent"`
 }
 
@@ -50,8 +51,19 @@ func (dto CreateProductDTO) ToProduct() entity.Product {
 	}
 }
 
-func (dto UpdateProductDTO) ToProduct() entity.Product {
+func (dto UpdateProductDTO) ToProduct(id int) entity.Product {
+	var topics []entity.Topic
+
+	if len(dto.TopicsIds) > 0 {
+		for _, id := range dto.TopicsIds {
+			topics = append(topics, entity.Topic{
+				TopicId: id,
+			})
+		}
+	}
+
 	return entity.Product{
+		ProductId:               id,
 		ProductName:             dto.ProductName,
 		ProductValue:            dto.ProductValue,
 		ProductCentimeterWidth:  dto.ProductCentimeterWidth,
@@ -60,5 +72,6 @@ func (dto UpdateProductDTO) ToProduct() entity.Product {
 		ProductCentimeterHeight: dto.ProductCentimeterHeight,
 		ProductCentimeterLength: dto.ProductCentimeterLength,
 		ProductDiscountPercent:  dto.ProductDiscountPercent,
+		Topics:                  topics,
 	}
 }

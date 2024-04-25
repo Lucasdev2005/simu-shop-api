@@ -27,6 +27,7 @@ func TestCreateProduct(t *testing.T) {
 		ProductCentimeterLength: 123,
 		ProductDiscountPercent:  1,
 		ProductSellerId:         1,
+		TopicsIds:               []int{1, 2, 3},
 	})
 
 	Ok(res, t)
@@ -66,6 +67,7 @@ func createProduct(productDTO dto.CreateProductDTO) core.Response {
 				createProductDTO.ProductValue = productDTO.ProductValue
 				createProductDTO.ProductKgWeitght = productDTO.ProductKgWeitght
 				createProductDTO.ProductSellerId = productDTO.ProductSellerId
+				createProductDTO.TopicsIds = productDTO.TopicsIds
 			}
 
 			return nil
