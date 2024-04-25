@@ -1,6 +1,7 @@
 package core
 
 import (
+	"log"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -31,10 +32,16 @@ func (p Paginate) GetOffset() int {
 	return (p.page - 1) * p.pageSize
 }
 
+func (p Paginate) GetLimit() int {
+	return p.pageSize
+}
+
 func NewPaginate(req Request) Paginate {
 	page, _ := strconv.Atoi(req.GetQueryParam("page"))
 	pageSize, _ := strconv.Atoi(req.GetQueryParam("page_size"))
 
+	log.Println("[NewPaginate] page: ", page)
+	log.Println("[NewPaginate] pageSize: ", pageSize)
 	return Paginate{
 		page,
 		pageSize,

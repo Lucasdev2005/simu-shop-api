@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"log"
 	"simushop/internal/core"
 	"simushop/internal/entity"
 )
@@ -44,19 +43,14 @@ func (r repository) UpdateTopic(topic entity.Topic, where string, args ...interf
 func (r repository) ListTopics(paginate core.Paginate, where string, args ...interface{}) []entity.Topic {
 	var (
 		topics []entity.Topic
-		limit  = 10
 	)
 
-	log.Println("Repository [ListTopics] paginate", paginate)
 	if len(where) > 0 {
-		err := r.paginate(paginate, &topics).Limit(limit).Where(where, args...)
-
-		log.Println("Repository [ListTopics] error ", err.Error)
+		r.paginate(paginate).Where(where, args...).Find(&topics)
 	} else {
-		r.paginate(paginate, &topics).Limit(limit)
+		r.paginate(paginate).Find(&topics)
 	}
 
-	log.Println("[ListTopics] topics", topics)
 	return topics
 }
 

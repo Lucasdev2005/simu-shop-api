@@ -16,8 +16,8 @@ func NewRepository(db *gorm.DB) repository {
 	return repository{db}
 }
 
-func (r repository) paginate(paginate core.Paginate, dest interface{}) *gorm.DB {
-	return r.db.Offset(paginate.GetOffset()).Find(dest)
+func (r repository) paginate(paginate core.Paginate) *gorm.DB {
+	return r.db.Offset(paginate.GetOffset()).Limit(paginate.GetLimit())
 }
 
 func (r repository) queryWhere(where string, args ...interface{}) *gorm.DB {

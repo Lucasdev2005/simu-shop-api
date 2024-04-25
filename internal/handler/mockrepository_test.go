@@ -3,6 +3,7 @@ package handler_test
 import (
 	"fmt"
 	"log"
+	"simushop/internal/core"
 	"simushop/internal/entity"
 	"strconv"
 )
@@ -79,7 +80,7 @@ func checkExistingTopicName(topicName string) error {
 	return result
 }
 
-func (m mockRepositoryImpl) ListTopics(where string, args ...interface{}) []entity.Topic {
+func (m mockRepositoryImpl) ListTopics(paginate core.Paginate, where string, args ...interface{}) []entity.Topic {
 
 	table := topicTable()
 

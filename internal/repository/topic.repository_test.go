@@ -61,7 +61,6 @@ func TestListTopics(t *testing.T) {
 		},
 	}), "topic_name LIKE ? ", "%"+"topic"+"%")
 
-	t.Error("[]", topics)
 	equal(t, true, len(topics) > 0, "error on List Topics.")
 }
 

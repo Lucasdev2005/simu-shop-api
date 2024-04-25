@@ -8,8 +8,6 @@ import (
 	"testing"
 )
 
-//TODO Tests, of paginate.
-
 var (
 	mockRepository  = &mockRepositoryImpl{}
 	handlerInstance = handler.NewHandler(mockRepository)
