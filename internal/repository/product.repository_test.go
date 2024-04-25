@@ -49,7 +49,6 @@ func TestTryCreatingProductsWithSameName(t *testing.T) {
 
 func TestUpdateProduct(t *testing.T) {
 	t.Log("testing update product")
-
 	product := entity.Product{
 		ProductName:             "Produto de Teste",
 		ProductValue:            123,
