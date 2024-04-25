@@ -11,8 +11,9 @@ type Product struct {
 	ProductCentimeterHeight float64 `gorm:"column:product_centimeter_height" json:"productCentimeterHeight"`
 	ProductCentimeterLength float64 `gorm:"column:product_cm_length" json:"productCentimeterLength"`
 
-	ProductSellerId int  `gorm:"column:product_seller_id" json:"sellerId"`
-	User            User `gorm:"foreignKey:ProductSellerId" json:"omitempty"`
+	ProductSellerId int     `gorm:"column:product_seller_id" json:"sellerId"`
+	User            User    `gorm:"foreignKey:ProductSellerId" json:"omitempty"`
+	Topics          []Topic `gorm:"many2many:product_topic"`
 }
 
 func (Product) TableName() string {
