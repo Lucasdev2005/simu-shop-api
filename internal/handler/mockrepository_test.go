@@ -93,6 +93,16 @@ func (m mockRepositoryImpl) ListTopics(paginate core.Paginate, where string, arg
 	return topics
 }
 
+func (m mockRepositoryImpl) PaginateTopics(paginate core.Paginate, where string, args ...interface{}) []entity.Product {
+	var products []entity.Product
+
+	for _, product := range productTable() {
+		products = append(products, product)
+	}
+
+	return products
+}
+
 func productTable() map[string]entity.Product {
 	products := map[string]entity.Product{}
 

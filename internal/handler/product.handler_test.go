@@ -98,3 +98,14 @@ func updateProduct(data dto.UpdateProductDTO) core.Response {
 		},
 	})
 }
+
+func TestGetTopics(t *testing.T) {
+	t.Log("testing get Topics")
+	res := handlerInstance.ListProducts(core.Request{
+		GetQueryParam: func(key string) string {
+			return "1"
+		},
+	})
+
+	Ok(res, t)
+}

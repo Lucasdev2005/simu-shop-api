@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"simushop/internal/core"
 	"simushop/internal/entity"
 )
 
@@ -40,4 +41,16 @@ func productNameExists(productName string, r repository) bool {
 	r.queryFirst(&productFound, "product_name = ?", productName)
 
 	return productFound.Exist()
+}
+
+func (r repository) PaginateTopics(paginate core.Paginate, where string, args ...interface{}) []entity.Product {
+	var products []entity.Product
+
+	if len(where) > 0 {
+		r.paginate(paginate).Where(where, args...).Find(&products)
+	} else {
+		r.paginate(paginate).Find(&products)
+	}
+
+	return products
 }

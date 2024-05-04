@@ -8,11 +8,11 @@ import (
 )
 
 type User struct {
-	UserId       int     `gorm:"column:user_id;primaryKey" json:"userId"`
-	UserPassword string  `gorm:"column:user_password;type:varchar" json:"userPassword"`
-	Username     string  `gorm:"column:username;type:varchar(50);uniqueIndex" json:"username"`
-	UserBalance  float64 `gorm:"column:user_ballance" json:"userBalance"`
-	UserType     string  `gorm:"column:user_type" json:"userType"`
+	UserId       int     `gorm:"column:user_id;primaryKey" json:"userId,omitempty"`
+	UserPassword string  `gorm:"column:user_password;type:varchar" json:"userPassword,omitempty"`
+	Username     string  `gorm:"column:username;type:varchar(50);uniqueIndex" json:"username,omitempty"`
+	UserBalance  float64 `gorm:"column:user_ballance" json:"userBalance,omitempty"`
+	UserType     string  `gorm:"column:user_type" json:"userType,omitempty"`
 }
 
 func (User) TableName() string {

@@ -46,6 +46,7 @@ func main() {
 		{
 			app.GroupMethod(productGroup, http.MethodPost, "/", handler.CreateProduct)
 			app.GroupMethod(productGroup, http.MethodPut, "/:id", handler.UpdateProduct)
+			app.GroupMethod(productGroup, http.MethodGet, "/", handler.ListProducts)
 		}
 
 		topicGroup := g.Group("topic")

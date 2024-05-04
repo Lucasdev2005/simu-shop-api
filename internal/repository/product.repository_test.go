@@ -1,6 +1,7 @@
 package repository_test
 
 import (
+	"simushop/internal/core"
 	"simushop/internal/entity"
 	"testing"
 )
@@ -70,6 +71,36 @@ func TestUpdateProduct(t *testing.T) {
 	}, "product_name = ? ", productNameToUpdate)
 
 	equal(t, nil, err, "error on update Product.")
+}
+
+func TestListProduct(t *testing.T) {
+	t.Log("testing list Products")
+
+	for _, i := range []string{"1", "2", "3"} {
+		createProduct(entity.Product{
+			ProductName:             "Produto de Teste listagem " + i,
+			ProductValue:            123,
+			ProductDiscountPercent:  2,
+			ProductDescription:      "Descrição de teste",
+			ProductKgWeight:         123,
+			ProductCentimeterWidth:  123,
+			ProductCentimeterHeight: 123,
+			ProductCentimeterLength: 35,
+			ProductSellerId:         1,
+		})
+	}
+
+	products := mockRepository.PaginateTopics(core.NewPaginate(core.Request{
+		GetQueryParam: func(key string) string {
+			if key == "page" {
+				return "1"
+			} else {
+				return "3"
+			}
+		},
+	}), "")
+
+	equal(t, true, len(products) == 3, "error on list products.")
 }
 
 func createProduct(e entity.Product) error {

@@ -3,6 +3,7 @@ package handler
 import (
 	"simushop/internal/core"
 	"simushop/internal/dto"
+	"simushop/internal/entity"
 	"strconv"
 )
 
@@ -47,4 +48,21 @@ func (h handler) UpdateProduct(request core.Request) core.Response {
 	}
 
 	return result
+}
+
+func (h handler) ListProducts(request core.Request) core.Response {
+
+	var (
+		paginate    = core.NewPaginate(request)
+		productname = request.GetQueryParam("productName")
+		products    []entity.Product
+	)
+
+	if len(productname) > 0 {
+		products = h.repository.PaginateTopics(paginate, "product_name", productname)
+	} else {
+		products = h.repository.PaginateTopics(paginate, "")
+	}
+
+	return core.Ok(products)
 }
