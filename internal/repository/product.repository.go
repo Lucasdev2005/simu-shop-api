@@ -47,7 +47,7 @@ func (r repository) PaginateTopics(paginate core.Paginate, where string, args ..
 	var products []entity.Product
 
 	if len(where) > 0 {
-		r.paginate(paginate).Where(where, args...).Find(&products)
+		r.paginate(paginate).Preload("Topics").Where(where, args...).Find(&products)
 	} else {
 		r.paginate(paginate).Find(&products)
 	}

@@ -4,7 +4,7 @@ package entity
 type Topic struct {
 	TopicId   int       `gorm:"column:topic_id;primaryKey" json:"topicId"`
 	TopicName string    `gorm:"column:topic_name;uniqueIndex" json:"topicName"`
-	Products  []Product `gorm:"many2many:product_topic"`
+	Products  []Product `gorm:"many2many:product_topic" json:"products,omitempty"`
 }
 
 func (Topic) TableName() string {
