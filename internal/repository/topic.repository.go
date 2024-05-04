@@ -5,18 +5,19 @@ import (
 	"simushop/internal/entity"
 )
 
-func (r repository) CreateTopic(topic entity.Topic) error {
-	var result error = nil
-
+func (r repository) CreateTopic(topic entity.Topic) (entity.Topic, error) {
 	err := findExistingTopicByName(topic, r)
 
 	if err != nil {
-		return err
+		return entity.Topic{}, err
 	} else {
-		result = r.db.Create(&topic).Error
+		errOnCreate := r.db.Create(&topic).Error
+		if errOnCreate != nil {
+			return entity.Topic{}, errOnCreate
+		}
 	}
 
-	return result
+	return topic, nil
 }
 
 func (r repository) UpdateTopic(topic entity.Topic, where string, args ...interface{}) error {

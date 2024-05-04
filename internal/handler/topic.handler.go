@@ -9,23 +9,22 @@ import (
 func (h handler) CreateTopic(request core.Request) core.Response {
 
 	var (
-		body   dto.CreateTopicDTO
-		result = core.Created("Topic Created")
+		body dto.CreateTopicDTO
 	)
 
 	request.Body(&body)
 
 	if err := h.ValidateStruct(body); err != nil {
-		result = core.BadRequest(err)
+		return core.BadRequest(err)
 	}
 
-	err := h.repository.CreateTopic(body.ToTopic())
+	topic, err := h.repository.CreateTopic(body.ToTopic())
 
 	if err != nil {
-		result = core.BadRequest(err.Error())
+		return core.BadRequest(err.Error())
 	}
 
-	return result
+	return core.Created(topic)
 }
 
 func (h handler) UpdateTopic(request core.Request) core.Response {

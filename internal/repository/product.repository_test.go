@@ -9,7 +9,7 @@ import (
 func TestCreatingProduct(t *testing.T) {
 	t.Log("Creating Product")
 
-	err := createProduct(entity.Product{
+	_, err := CreateProduct(entity.Product{
 		ProductName:             "Produto de Teste teste",
 		ProductValue:            123,
 		ProductDiscountPercent:  2,
@@ -40,10 +40,10 @@ func TestTryCreatingProductsWithSameName(t *testing.T) {
 	}
 
 	/* creating product*/
-	createProduct(product)
+	CreateProduct(product)
 
 	/* creating product with same name*/
-	err := createProduct(product)
+	_, err := CreateProduct(product)
 
 	notEqual(t, nil, err, "Saving user with same names into the database.")
 }
@@ -63,7 +63,7 @@ func TestUpdateProduct(t *testing.T) {
 	}
 	productNameToUpdate := product.ProductName + "novo"
 
-	createProduct(product)
+	CreateProduct(product)
 
 	err := mockRepository.UpdateProduct(entity.Product{
 		ProductName:  productNameToUpdate,
@@ -77,7 +77,7 @@ func TestListProduct(t *testing.T) {
 	t.Log("testing list Products")
 
 	for _, i := range []string{"1", "2", "3"} {
-		createProduct(entity.Product{
+		CreateProduct(entity.Product{
 			ProductName:             "Produto de Teste listagem " + i,
 			ProductValue:            123,
 			ProductDiscountPercent:  2,
@@ -103,6 +103,6 @@ func TestListProduct(t *testing.T) {
 	equal(t, true, len(products) == 3, "error on list products.")
 }
 
-func createProduct(e entity.Product) error {
+func CreateProduct(e entity.Product) (entity.Product, error) {
 	return mockRepository.CreateProduct(e)
 }

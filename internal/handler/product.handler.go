@@ -9,22 +9,22 @@ import (
 
 func (h handler) CreateProduct(request core.Request) core.Response {
 	var (
-		body   dto.CreateProductDTO
-		result core.Response = core.Ok("Product Created.")
+		body dto.CreateProductDTO
 	)
 	request.Body(&body)
 	errOnDTO := h.ValidateStruct(body)
 
 	if errOnDTO != nil {
-		result = core.BadRequest(errOnDTO)
+		return core.BadRequest(errOnDTO)
 	} else {
-		errOnCreateProduct := h.repository.CreateProduct(body.ToProduct())
+		product, errOnCreateProduct := h.repository.CreateProduct(body.ToProduct())
 		if errOnCreateProduct != nil {
-			result = core.BadRequest(errOnCreateProduct.Error())
+			return core.BadRequest(errOnCreateProduct.Error())
+		} else {
+			return core.Created(product)
 		}
 	}
 
-	return result
 }
 
 func (h handler) UpdateProduct(request core.Request) core.Response {

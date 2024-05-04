@@ -10,7 +10,7 @@ import (
 func TestCreateUser(t *testing.T) {
 	t.Log("testing creating a user.")
 
-	_, err := createUser(entity.User{
+	_, err := CreateUser(entity.User{
 		UserPassword: "gerinus@123",
 		Username:     "lucas moreira nunes",
 		UserBalance:  300,
@@ -30,16 +30,16 @@ func TestCreatingUsernameWithExistingUsername(t *testing.T) {
 	}
 
 	// creating first user with 'lucas moreira nunes' name.
-	createUser(user)
+	CreateUser(user)
 
-	_, err := createUser(user)
+	_, err := CreateUser(user)
 	notEqual(t, nil, err, "saving user with a existing username.")
 }
 
 func TestUpdatingUser(t *testing.T) {
 	t.Log("testing update user.")
 
-	userCreated, err := createUser(entity.User{
+	userCreated, err := CreateUser(entity.User{
 		UserPassword: "gerinus@123",
 		Username:     "Lucas Teste update name",
 		UserBalance:  300,
@@ -56,6 +56,6 @@ func TestUpdatingUser(t *testing.T) {
 	equal(t, nil, errOnUpdate, "error on updating user: "+strconv.Itoa(userCreated.UserId))
 }
 
-func createUser(user entity.User) (entity.User, error) {
+func CreateUser(user entity.User) (entity.User, error) {
 	return mockRepository.CreateUser(user)
 }

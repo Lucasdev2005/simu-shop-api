@@ -12,10 +12,10 @@ type repository interface {
 	CreateUser(user entity.User) (entity.User, error)
 	UpdateUser(user entity.User, where string, args ...interface{}) error
 
-	CreateProduct(p entity.Product) error
+	CreateProduct(p entity.Product) (entity.Product, error)
 	UpdateProduct(p entity.Product, where string, args ...interface{}) error
 
-	CreateTopic(topic entity.Topic) error
+	CreateTopic(topic entity.Topic) (entity.Topic, error)
 	UpdateTopic(topic entity.Topic, where string, args ...interface{}) error
 	ListTopics(p core.Paginate, where string, args ...interface{}) []entity.Topic
 	PaginateTopics(p core.Paginate, where string, args ...interface{}) []entity.Product

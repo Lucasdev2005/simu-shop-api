@@ -29,6 +29,7 @@ func main() {
 		entity.User{},
 		entity.Topic{},
 		entity.Product{},
+		entity.ShoppingCart{},
 	)
 
 	repository := repository.NewRepository(database.Db)

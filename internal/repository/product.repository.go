@@ -5,16 +5,15 @@ import (
 	"simushop/internal/entity"
 )
 
-func (r repository) CreateProduct(product entity.Product) error {
-	var (
-		result error = newError("product with name '" + product.ProductName + "' exists.")
-	)
-
+func (r repository) CreateProduct(product entity.Product) (entity.Product, error) {
 	if !productNameExists(product.ProductName, r) {
-		result = r.db.Create(&product).Error
+		err := r.db.Create(&product).Error
+		if err != nil {
+			return entity.Product{}, err
+		}
 	}
 
-	return result
+	return product, nil
 }
 
 func (r repository) UpdateProduct(product entity.Product, where string, args ...interface{}) error {

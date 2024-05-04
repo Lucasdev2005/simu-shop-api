@@ -14,6 +14,7 @@ var db = database.NewDatabase(
 	entity.User{},
 	entity.Topic{},
 	entity.Product{},
+	entity.ShoppingCart{},
 )
 
 var mockRepository = repository.NewRepository(db.Db)

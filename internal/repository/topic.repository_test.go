@@ -10,7 +10,7 @@ import (
 func TestCreatingTopic(t *testing.T) {
 	t.Log("testing create Topic.")
 
-	err := createTopic(entity.Topic{
+	_, err := CreateTopic(entity.Topic{
 		TopicName: "Topic Test create",
 	})
 
@@ -22,7 +22,7 @@ func TestUpdateTopic(t *testing.T) {
 
 	topicName := "new name"
 
-	createTopic(entity.Topic{TopicName: topicName})
+	CreateTopic(entity.Topic{TopicName: topicName})
 
 	err := mockRepository.UpdateTopic(entity.Topic{TopicName: "new name actual"}, "topic_name = ?", topicName)
 
@@ -36,8 +36,8 @@ func TestCreatingTopicsWithSameName(t *testing.T) {
 		TopicName: "Topic Test",
 	}
 
-	createTopic(topic)
-	err := createTopic(topic)
+	CreateTopic(topic)
+	_, err := CreateTopic(topic)
 
 	notEqual(t, nil, err, "creating topics with same name.")
 }
@@ -46,7 +46,7 @@ func TestListTopics(t *testing.T) {
 	t.Log("testing list Topics")
 
 	for _, i := range []int{1, 2, 3} {
-		createTopic(entity.Topic{
+		CreateTopic(entity.Topic{
 			TopicName: "topic " + strconv.Itoa(i),
 		})
 	}
@@ -64,6 +64,6 @@ func TestListTopics(t *testing.T) {
 	equal(t, true, len(topics) > 0, "error on List Topics.")
 }
 
-func createTopic(t entity.Topic) error {
+func CreateTopic(t entity.Topic) (entity.Topic, error) {
 	return mockRepository.CreateTopic(t)
 }
