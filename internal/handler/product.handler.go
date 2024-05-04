@@ -59,7 +59,7 @@ func (h handler) ListProducts(request core.Request) core.Response {
 	)
 
 	if len(productname) > 0 {
-		products = h.repository.PaginateTopics(paginate, "product_name", productname)
+		products = h.repository.PaginateTopics(paginate, "product_name LIKE ?", "%"+productname+"%")
 	} else {
 		products = h.repository.PaginateTopics(paginate, "")
 	}
