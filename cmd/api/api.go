@@ -56,6 +56,11 @@ func main() {
 			app.GroupMethod(topicGroup, http.MethodPut, "/:id", handler.UpdateTopic)
 			app.GroupMethod(topicGroup, http.MethodGet, "/", handler.ListTopics)
 		}
+
+		shoppingCartGroup := g.Group("shopping-cart")
+		{
+			app.GroupMethod(shoppingCartGroup, http.MethodPost, "/", handler.AddItemOnCart)
+		}
 	})
 
 	app.Run()

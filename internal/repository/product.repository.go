@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"simushop/internal/core"
 	"simushop/internal/entity"
 )
@@ -11,9 +12,10 @@ func (r repository) CreateProduct(product entity.Product) (entity.Product, error
 		if err != nil {
 			return entity.Product{}, err
 		}
+		return product, nil
 	}
 
-	return product, nil
+	return entity.Product{}, fmt.Errorf("Product with name " + product.ProductName + " exists.")
 }
 
 func (r repository) UpdateProduct(product entity.Product, where string, args ...interface{}) error {

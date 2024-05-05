@@ -1,6 +1,7 @@
 package repository_test
 
 import (
+	"log"
 	"simushop/internal/core"
 	"simushop/internal/entity"
 	"testing"
@@ -45,6 +46,7 @@ func TestTryCreatingProductsWithSameName(t *testing.T) {
 	/* creating product with same name*/
 	_, err := CreateProduct(product)
 
+	log.Println("[TestTryCreatingProductsWithSameName] err: ", err)
 	notEqual(t, nil, err, "Saving user with same names into the database.")
 }
 

@@ -34,13 +34,13 @@ func (m mockRepositoryImpl) UpdateUser(user entity.User, where string, args ...i
 	return nil
 }
 
-func (m mockRepositoryImpl) CreateProduct(product entity.Product) error {
+func (m mockRepositoryImpl) CreateProduct(product entity.Product) (entity.Product, error) {
 
 	if productTable()[product.ProductName].Exist() {
-		return fmt.Errorf("Product " + product.ProductName + "Exists.")
+		return entity.Product{}, fmt.Errorf("Product " + product.ProductName + "Exists.")
 	}
 
-	return nil
+	return entity.Product{}, nil
 }
 
 func (m mockRepositoryImpl) UpdateProduct(product entity.Product, where string, args ...interface{}) error {
@@ -52,8 +52,13 @@ func (m mockRepositoryImpl) UpdateProduct(product entity.Product, where string, 
 	return nil
 }
 
-func (m mockRepositoryImpl) CreateTopic(topic entity.Topic) error {
-	return checkExistingTopicName(topic.TopicName)
+func (m mockRepositoryImpl) CreateTopic(topic entity.Topic) (entity.Topic, error) {
+	err := checkExistingTopicName(topic.TopicName)
+	if err != nil {
+		return entity.Topic{}, err
+	} else {
+		return entity.Topic{}, nil
+	}
 }
 
 func (m mockRepositoryImpl) UpdateTopic(topic entity.Topic, where string, args ...interface{}) error {
@@ -101,6 +106,10 @@ func (m mockRepositoryImpl) PaginateTopics(paginate core.Paginate, where string,
 	}
 
 	return products
+}
+
+func (m mockRepositoryImpl) AddItemOnCart(shoppingCart entity.ShoppingCart) (entity.ShoppingCart, error) {
+	return entity.ShoppingCart{}, nil
 }
 
 func productTable() map[string]entity.Product {

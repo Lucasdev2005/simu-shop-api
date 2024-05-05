@@ -30,7 +30,7 @@ func TestCreateProduct(t *testing.T) {
 		TopicsIds:               []int{1, 2, 3},
 	})
 
-	Ok(res, t)
+	Created(res, t)
 }
 
 func TestUpdateProduct(t *testing.T) {

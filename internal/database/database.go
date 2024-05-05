@@ -11,7 +11,9 @@ type database struct {
 }
 
 func NewDatabase(dialector gorm.Dialector, entities ...interface{}) database {
-	db, err := gorm.Open(dialector, &gorm.Config{})
+	db, err := gorm.Open(dialector, &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 
 	if err != nil {
 		log.Println(err)

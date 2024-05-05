@@ -19,6 +19,8 @@ type repository interface {
 	UpdateTopic(topic entity.Topic, where string, args ...interface{}) error
 	ListTopics(p core.Paginate, where string, args ...interface{}) []entity.Topic
 	PaginateTopics(p core.Paginate, where string, args ...interface{}) []entity.Product
+
+	AddItemOnCart(shoppingCart entity.ShoppingCart) (entity.ShoppingCart, error)
 }
 
 type handler struct {

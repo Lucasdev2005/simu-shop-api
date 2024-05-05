@@ -30,7 +30,12 @@ func TestAddItemOnCart(t *testing.T) {
 		ProductCentimeterHeight: 123,
 		ProductCentimeterLength: 35,
 		ProductSellerId:         1,
+		Topics:                  []entity.Topic{{TopicId: topic.TopicId}},
 	})
 
-	mockRepository.AddItemOncart(entity.ShoppingCart{})
+	mockRepository.AddItemOncart(entity.ShoppingCart{
+		ShoppingCartItemQuantity: 1,
+		ShoppingCartItemId:       product.ProductId,
+		ShoppingCartUserId:       user.UserId,
+	})
 }
