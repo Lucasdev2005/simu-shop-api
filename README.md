@@ -21,4 +21,5 @@
 1) install ```docker``` and ```docker compose``` on your machine for external dependencies.
 2) install a ```1.2X``` version from Go on your machine.
 3) run ``` docker compose up -d ``` from up all external dependencies (Database, MQ, Grafana)
-4) run ``` go run cmd/api/api.go ``` to start API.
+4) create a ```.env``` file with the variables from the ```.env.example``` file.
+5) run ``` go run cmd/api/api.go ``` to start API.
