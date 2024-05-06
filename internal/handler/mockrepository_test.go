@@ -112,6 +112,10 @@ func (m mockRepositoryImpl) AddItemOnCart(shoppingCart entity.ShoppingCart) (ent
 	return entity.ShoppingCart{}, nil
 }
 
+func (m mockRepositoryImpl) RemoveItemOnCart(itemId, userId int) error {
+	return nil
+}
+
 func productTable() map[string]entity.Product {
 	products := map[string]entity.Product{}
 

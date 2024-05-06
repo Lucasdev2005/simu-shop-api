@@ -31,3 +31,11 @@ func (r repository) AddItemOnCart(shoppingCart entity.ShoppingCart) (entity.Shop
 		return shoppingCart, nil
 	}
 }
+
+func (r repository) RemoveItemOnCart(itemId, userId int) error {
+	return r.db.Where(
+		"shopping_cart_item_id = ? AND shopping_cart_user_id = ?",
+		itemId,
+		userId,
+	).Delete(&entity.ShoppingCart{}).Error
+}

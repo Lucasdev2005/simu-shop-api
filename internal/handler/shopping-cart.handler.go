@@ -6,7 +6,6 @@ import (
 )
 
 func (h handler) AddItemOnCart(request core.Request) core.Response {
-
 	var (
 		body dto.AddItemCartDTO
 	)
@@ -25,5 +24,8 @@ func (h handler) AddItemOnCart(request core.Request) core.Response {
 	} else {
 		return core.Created(shoppingCart)
 	}
+}
 
+func (h handler) RemoveItemFromCart(request core.Request) core.Response {
+	return core.Ok("")
 }

@@ -21,6 +21,7 @@ type repository interface {
 	PaginateTopics(p core.Paginate, where string, args ...interface{}) []entity.Product
 
 	AddItemOnCart(shoppingCart entity.ShoppingCart) (entity.ShoppingCart, error)
+	RemoveItemOnCart(itemId, userId int) error
 }
 
 type handler struct {
